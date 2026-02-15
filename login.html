@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Parking Management System</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="bubbles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="login-box" role="main">
+    <h2>Login</h2>
+
+    <form id="loginForm" onsubmit="return false;">
+      <input id="username" type="text" placeholder="Username or Email" required autocomplete="username" />
+      <input id="password" type="password" placeholder="Password" required autocomplete="current-password" />
+      <div>
+        <button id="loginBtn" type="submit">Login</button>
+      </div>
+    </form>
+
+    <div id="message" class="msg" aria-live="polite"></div>
+
+    <div class="links">
+      <a href="register.html">Create account</a> &nbsp;•&nbsp;
+      <a href="college_project.html">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    // Fallback default credentials
+    const DEFAULT_USER = { user: 'admin', pass: 'admin123' };
+
+    function showMessage(text, success = false) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.className = 'msg' + (success ? ' success' : '');
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', function () {
+      const inputUser = document.getElementById('username').value.trim();
+      const inputPass = document.getElementById('password').value;
+
+      // Try to get saved credentials from localStorage (from register)
+      const savedUser = localStorage.getItem('pms_user');
+      const savedPass = localStorage.getItem('pms_pass');
+
+      const valid = (
+        // match saved (if exists)
+        (savedUser && savedPass && inputUser === savedUser && inputPass === savedPass) ||
+        // or match default fallback
+        (inputUser === DEFAULT_USER.user && inputPass === DEFAULT_USER.pass)
+      );
+
+      if (valid) {
+        showMessage('Login successful! Redirecting...', true);
+        // small delay then redirect to index (or dashboard)
+        setTimeout(() => { window.location.href = 'home.html'; }, 900);
+      } else {
+        showMessage('Invalid ID or Password. Please try again.', false);
+      }
+    });
+  </script>
+</body>
+</html>

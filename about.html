@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Parking Management System</title>
+  <style>
+    :root{
+      --bg1:#4560d8ad;
+      --bg2:#5071ce;
+      --accent:#00ffcc;
+      --glass: rgba(255,255,255,0.08);
+      --glass-2: rgba(255,255,255,0.14);
+      --card-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 18px;
+      --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Poppins", "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(120deg,var(--bg1),var(--bg2));
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    nav{
+      position:fixed;top:0;left:0;right:0;height:72px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 28px;z-index:60;
+      background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand h1{font-size:18px;margin:0;font-weight:700;letter-spacing:0.2px}
+    .nav-links{display:flex;gap:18px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:10px;font-weight:600;transition:.22s}
+    .nav-links a:hover{background:var(--glass-2);color:var(--accent)}
+
+    /* HERO */
+    .hero{
+      padding:120px 20px 60px;
+      display:flex;justify-content:center;
+      align-items:start;
+      min-height:520px;
+    }
+    .hero-inner{
+      width:100%;max-width:var(--maxw);
+      display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:var(--radius);padding:36px;
+      box-shadow:var(--card-shadow);backdrop-filter: blur(6px);
+      transform:translateY(18px);opacity:0;
+      animation: enterUp .9s ease .1s forwards;
+    }
+    @keyframes enterUp{
+      to{transform:none;opacity:1}
+    }
+    .hero h2{font-size:34px;margin:0 0 10px}
+    .hero p.lead{opacity:0.95;margin:0 0 18px;font-size:16px}
+    .hero .cta{display:flex;gap:12px;margin-top:10px}
+    .btn{
+      background:var(--accent);color:#001;border:none;padding:12px 18px;border-radius:12px;font-weight:800;cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);transition:transform .18s,box-shadow .18s;
+    }
+    .btn:active{transform:translateY(2px)}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff}
+
+    /* hero visual */
+    .hero-visual{
+      padding:10px;border-radius:16px;
+      /* background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(255,255,255,0.02)); */
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      position:relative;overflow:hidden;height:420px;
+    }
+    .hero-visual img{position:absolute;right:-20px;bottom:-10px;height:420px;object-fit:contain;opacity:0;transform:translateY(40px) rotate(-4deg);
+      animation: driftIn 1.2s cubic-bezier(.2,.9,.2,1) .2s forwards;}
+    @keyframes driftIn{to{opacity:1;transform:none}}
+
+    /* Services / Cards */
+    .section{width:100%;max-width:var(--maxw);margin:40px auto;padding:28px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .card{
+      background:var(--glass);padding:18px;border-radius:14px;box-shadow:0 8px 26px rgba(0,0,0,0.28);
+      transform:translateY(18px);opacity:0;transition:all .45s;
+    }
+    .card.show{transform:none;opacity:1}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .card p{margin:0;font-size:14px;opacity:0.95}
+
+    /* Counters */
+    .counters{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap}
+    .counter{flex:1;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:18px;border-radius:12px;text-align:center}
+    .counter .num{font-size:36px;font-weight:800;color:var(--accent);margin-bottom:6px}
+    .counter .label{opacity:0.9}
+
+    /* Team */
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+    .member{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));padding:14px;border-radius:14px;text-align:center;position:relative;
+      overflow:hidden;transition:transform .28s, box-shadow .28s;
+    }
+    .member:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+    .member img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:12px}
+    .member h4{margin:6px 0 4px}
+    .member p{margin:0;font-size:13px;opacity:0.9}
+    .socials{display:flex;gap:8px;justify-content:center;margin-top:8px}
+    .socials a{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.06);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+
+    /* Timeline */
+    .timeline{margin-top:18px;padding:18px;background:var(--glass);border-radius:12px}
+    .timeline-item{display:flex;gap:18px;align-items:flex-start;margin:18px 0;opacity:0;transform:translateY(18px);transition:all .4s}
+    .timeline-item.show{opacity:1;transform:none}
+    .timeline-dot{min-width:14px;height:14px;border-radius:50%;background:var(--accent);margin-top:6px}
+    .timeline-body{flex:1}
+    .timeline-year{font-weight:800;margin:0 0 6px}
+
+    /* Footer CTA */
+    footer{margin-top:40px;padding:40px 20px;text-align:center}
+    .footer-card{max-width:900px;margin:0 auto;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(255,255,255,0.02));padding:28px;border-radius:16px;box-shadow:var(--card-shadow)}
+    .small{font-size:13px;opacity:0.85}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero-inner{grid-template-columns:1fr;gap:20px}
+      .team-grid{grid-template-columns:repeat(2,1fr)}
+      .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      nav{padding:0 12px}
+      .team-grid{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .hero{padding-top:100px}
+      .hero-visual{height:300px}
+      .hero-visual img{height:300px}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="Booking.html">Services</a>
+    
+    </div>
+  </nav>
+
+  <!-- HERO / Intro -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <div class="hero-card">
+        <h2>About ParkEase — Smart Parking, Simplified.</h2>
+        <p class="lead">We build intelligent parking solutions that reduce congestion, save time, and make parking effortless for drivers and lot owners. Our platform combines real-time availability, secure bookings, and analytics to optimize space usage.</p>
+
+        <div class="counters" aria-hidden="true">
+          <div class="counter">
+            <div class="num" data-target="12345">0</div>
+            <div class="label">Vehicles Parked</div>
+          </div>
+          <div class="counter">
+            <div class="num" data-target="8420">0</div>
+            <div class="label">Happy Customers</div>
+          </div>
+          <div class="counter">
+            <div class="num" data-target="6">0</div>
+            <div class="label">Years in Service</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px" class="cta">
+          <button class="btn" onclick="location.href='booking.html'">Book Now</button>
+          <a class="btn secondary" href="#services">See Services</a>
+        </div>
+      </div>
+
+    
+    
+        <img src="https://cdn.pixabay.com/photo/2022/07/26/05/59/car-parking-sign-7345139_1280.png" style=" width: 80%; border-radius: 10%; margin-left: 10vh; padding: 0%;" alt="parking visual"/>
+      
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="about" class="section">
+    <h2 style="margin:0;font-size:26px">Our Mission & What We Do</h2>
+    <p class="small" style="margin-top:8px;max-width:900px">ParkEase aims to reduce city congestion by providing a seamless parking experience — for drivers, property owners, and businesses. We focus on automation, real-time data, and user-friendly interfaces.</p>
+
+    <div class="cards">
+      <div class="card" data-animate>
+        <h3>Real-time Availability</h3>
+        <p>See available spots live, reserve in advance, and get guided to your slot — all from the app or web.</p>
+      </div>
+      <div class="card" data-animate>
+        <h3>Secure Payments & Booking</h3>
+        <p>Integrated payment gateway, booking confirmations, and digital tickets for a smooth entry/exit.</p>
+      </div>
+      <div class="card" data-animate>
+        <h3>Analytics & Reports</h3>
+        <p>Occupancy heatmaps, hourly/daily trends, and actionable reports for lot owners to maximize revenue.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="section">
+    <h2 style="margin:0;font-size:26px">Meet the Team</h2>
+    <p class="small" style="margin-top:8px">A small team of product-builders, parking experts and operations people who care about great parking experiences.</p>
+
+    <div class="team-grid" id="teamGrid">
+      <div class="member" data-animate>
+        <img src="jatin.jpg"  alt="Team Member">
+        <h4>Jatin Dhiman</h4>
+        <p>Founder</p>
+        <div class="socials">
+          <a href="#" title="LinkedIn">in</a><a href="#" title="Twitter">t</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TIMELINE / HISTORY -->
+  <section id="history" class="section">
+    <h2 style="margin:0;font-size:26px">Our Journey</h2>
+    <p class="small" style="margin-top:8px">From pilot garages to city-wide deployments — highlights from our journey.</p>
+
+    <div class="timeline">
+      <div class="timeline-item" data-animate>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-text">Company founded — built first prototype for a shopping mall parking system.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-text">Pilot launched: automated booking + parking guidance for 3 sites.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-year">2022</div>
+          <div class="timeline-text">Scales to multiple city parking operators; introduced analytics dashboard.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-text">Crossed 10k+ bookings and launched API for partners.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <footer id="contact">
+    <div class="footer-card">
+      <h2 style="margin:0 0 10px">Ready to make parking painless?</h2>
+      <p class="small">Talk to us or start by booking a slot. We also offer onboarding for parking lot operators.</p>
+      <div style="margin-top:16px">
+        <button class="btn" onclick="location.href='booking.html'">Get Started — Book a Slot</button>
+      </div>
+      <p style="margin-top:18px" class="small">Contact: <strong>support@parkease.example</strong> • Phone: <strong>+91 98765 43210</strong></p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth reveal on scroll for elements with [data-animate]
+    const animateItems = document.querySelectorAll('[data-animate]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+        }
+      });
+    }, {threshold: 0.12});
+    animateItems.forEach(el=>io.observe(el));
+
+    // Counters animation when visible
+    const counters = document.querySelectorAll('.num');
+    const countersObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const el = entry.target;
+          const target = +el.dataset.target;
+          let start = 0;
+          const dur = Math.max(800, Math.min(2200, target/ (target>100?4:1)));
+          const step = (timestamp) => {
+            start += Math.ceil(target / (dur/40));
+            if(start >= target) { el.innerText = target; }
+            else { el.innerText = start; requestAnimationFrame(step); }
+          };
+          requestAnimationFrame(step);
+          obs.unobserve(el);
+        }
+      });
+    }, {threshold:0.4});
+    counters.forEach(c => countersObserver.observe(c));
+
+    // Optional: simple hash navigation smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // Small touch: floating hero image subtle parallax
+    const heroVisual = document.querySelector('.hero-visual img');
+    window.addEventListener('mousemove', (e)=>{
+      if(!heroVisual) return;
+      const w = window.innerWidth, h = window.innerHeight;
+      const nx = (e.clientX - w/2)/w;
+      const ny = (e.clientY - h/2)/h;
+      heroVisual.style.transform = `translate(${nx*12}px, ${ny*8}px) rotate(-3deg)`;
+    });
+
+  </script>
+</body>
+</html>

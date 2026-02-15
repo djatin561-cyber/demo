@@ -1,0 +1,242 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ===== Scroll bar hide fix ===== */
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* ================= HEADER ================= */
+    .header {
+      background: linear-gradient(to right, rgba(100, 123, 223, 0.866), #f2fcfe, rgba(100, 127, 223, 0.866));
+      width: 100%;
+      padding: 3.1vh 0;
+      text-align: center;
+    }
+
+    .header h1 {
+      color: rgb(200, 139, 139);
+      -webkit-text-stroke: 1px rgb(64, 77, 99);
+      -webkit-text-fill-color: white;
+      text-shadow: 1px 1px 2px black, 0 0 25px rgb(146, 224, 236), 0 0 5px rgb(81, 81, 81);
+      font-size: 2vw;
+    }
+
+    h4 {
+      background: linear-gradient(to right, white, rgb(83, 119, 219), white);
+      text-align: center;
+      color: rgb(200, 139, 139);
+      -webkit-text-stroke: 0.5px black;
+      -webkit-text-fill-color: white;
+      font-size: 1.2vw;
+      padding: 1vh 0;
+      width: 100%;
+    }
+
+    /* ================= MAIN SECTION ================= */
+    .main_1 {
+      background-image: url("https://cdn.pixabay.com/photo/2019/11/10/10/03/parking-4615361_1280.jpg");
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 84vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mini_1 {
+      width: 90%;
+      height: 80%;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2%;
+      gap: 2%;
+      overflow: hidden;
+    }
+
+    .left-box {
+      width: 55%;
+      color: white;
+    }
+
+    .left-box h1 {
+      font-size: 6vh;
+      margin-bottom: 2vh;
+      text-shadow: 3px 2px 5px rgb(0, 0, 0), 0 0 25px rgb(146, 224, 236), 0 0 5px rgb(81, 81, 81);
+    }
+
+    .left-box p {
+      font-size: 2.8vh;
+      margin-bottom: 2vh;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    marquee {
+      font-size: 2.5vh;
+      border-left: 1px solid rgb(43, 42, 42);
+      border-right: 1px solid black;
+      color: white;
+      padding: 1vh 0;
+      width: 80%;
+      margin-bottom: 3vh;
+      text-shadow: 2px 2px 4px black;
+      display: block;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 4vh;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      padding: 1.5vh 4vw;
+      border-radius: 30px;
+      font-size: 2.5vh;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .right-box {
+      width: 35%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      border: 10px solid rgba(84, 105, 175, 0.4);
+      background-color: rgba(228, 230, 238, 0.1);
+      padding: 2%;
+    }
+
+    .right-box img {
+      width: 100%;
+      height: auto;
+      border-top-left-radius: 10vh;
+      border-bottom-right-radius: 10vh;
+      object-fit: cover;
+    }
+
+    /* ================= MEDIA QUERIES ================= */
+
+    /* Tablet View */
+    @media (max-width: 1024px) {
+      .header h1 {
+        font-size: 4vw;
+      }
+
+      h4 {
+        font-size: 2vw;
+      }
+
+      .mini_1 {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        padding: 4%;
+      }
+
+      .left-box {
+        width: 90%;
+        text-align: center;
+      }
+
+      .right-box {
+        width: 60%;
+        margin-top: 4vh;
+      }
+    }
+
+    /* Mobile View */
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 6vw;
+      }
+
+      h4 {
+        font-size: 3.5vw;
+      }
+
+      .main_1 {
+        height: auto;
+        padding: 5vh 0;
+      }
+
+      .mini_1 {
+        flex-direction: column;
+        height: auto;
+        padding: 6%;
+      }
+
+      .left-box h1 {
+        font-size: 5vh;
+      }
+
+      .left-box p {
+        font-size: 2.4vh;
+      }
+
+      marquee {
+        width: 100%;
+        font-size: 2.2vh;
+      }
+
+      .button-container {
+        justify-content: center;
+      }
+
+      .btn {
+        padding: 1vh 8vw;
+        font-size: 2.2vh;
+      }
+
+      .right-box {
+        width: 70%;
+        border-width: 6px;
+      }
+
+      .right-box img {
+        border-radius: 20px;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 400px) {
+      .left-box h1 {
+        font-size: 4vh;
+      }
+
+      .btn {
+        font-size: 2vh;
+        padding: 1vh 6vw;
+      }
+
+      marquee {
+        font-size: 2vh;
+      }
+    }

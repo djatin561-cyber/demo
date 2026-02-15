@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - Parking Management System</title>
+  <link rel="stylesheet" href="registered.css" />
+</head>
+<body>
+  <div class="box">
+    <h2>Create Account</h2>
+
+    <form id="regForm" onsubmit="return false;">
+      <input id="regUser" type="text" placeholder="Username (e.g. user123)" required autocomplete="username" />
+      <input id="regEmail" type="email" placeholder="Email" required autocomplete="email" />
+      <input id="regPass" type="password" placeholder="Password" required autocomplete="new-password" />
+      <input id="regPass2" type="password" placeholder="Confirm Password" required />
+      <div>
+        <button id="regBtn" type="submit">Register</button>
+      </div>
+    </form>
+
+    <div id="regMsg" class="msg" aria-live="polite"></div>
+
+    <div class="links">
+      <a href="login.html">Already have account? Login</a> &nbsp;•&nbsp;
+      <a href="college_project.html">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('regBtn').addEventListener('click', function () {
+      const u = document.getElementById('regUser').value.trim();
+      const e = document.getElementById('regEmail').value.trim();
+      const p = document.getElementById('regPass').value;
+      const p2 = document.getElementById('regPass2').value;
+      const msgEl = document.getElementById('regMsg');
+
+      if (!u || !e || !p || !p2) { msgEl.textContent = 'Please fill all fields.'; msgEl.className='msg'; return; }
+      if (p !== p2) { msgEl.textContent = 'Passwords do not match.'; msgEl.className='msg'; return; }
+      if (p.length < 4) { msgEl.textContent = 'Password should be at least 4 characters.'; msgEl.className='msg'; return; }
+
+      // store credentials in localStorage (for demo only)
+      localStorage.setItem('pms_user', u);
+      localStorage.setItem('pms_email', e);
+      localStorage.setItem('pms_pass', p);
+
+      msgEl.textContent = 'Registration successful! Redirecting to login...';
+      msgEl.className = 'msg success';
+
+      setTimeout(() => { window.location.href = 'home.html'; }, 900);
+    });
+  </script>
+</body>
+</html>

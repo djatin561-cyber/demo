@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parking Management Booking</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #4560d8ad, #5071ce);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      animation: slideDown 1s ease;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #00ffcc;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-80px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .container {
+      margin-top: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .booking-form {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 400px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #fff;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    input, select {
+      background: rgba(255, 255, 255, 0.8);
+      color: #333;
+    }
+
+    button {
+      background: #00ffcc;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #fff;
+      transform: scale(1.05);
+    }
+
+    .car-animation {
+      position: absolute;
+      bottom: 50px;
+      left: -200px;
+      animation: carMove 8s linear infinite;
+    }
+
+    @keyframes carMove {
+      0% { left: -200px; }
+      50% { left: 50%; transform: translateX(-50%); }
+      100% { left: 110%; }
+    }
+
+    /* Table Styling */
+    .table-container {
+      margin: 40px auto;
+      width: 90%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+
+    th {
+      background: rgba(0,0,0,0.4);
+    }
+
+    .action-btn {
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 6px 10px;
+      margin: 3px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .delete-btn {
+      background: #ff4444;
+      color: #fff;
+    }
+
+    .search-box {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .search-box input {
+      width: 70%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .search-box button {
+      width: 25%;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="home.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="#">Booking</a>
+</nav>
+
+<div class="container">
+  <div class="booking-form">
+    <h2>Book Your Parking Spot</h2>
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="vehicle" placeholder="Vehicle Number" required>
+      <select id="type" required>
+        <option value="">Select Vehicle Type</option>
+        <option>Car</option>
+        <option>Bike</option>
+        <option>Truck</option>
+      </select>
+      <input type="datetime-local" id="datetime" required>
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </div>
+</div>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="Search by Name or Vehicle Number...">
+  <button class="action-btn" id="clearAll">Remove All</button>
+</div>
+
+<div class="table-container">
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Vehicle No.</th>
+        <th>Type</th>
+        <th>Date & Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  const form = document.getElementById('bookingForm');
+  const tableBody = document.querySelector('#dataTable tbody');
+  const search = document.getElementById('search');
+  const clearAll = document.getElementById('clearAll');
+  let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+  function displayData(data) {
+    tableBody.innerHTML = '';
+    data.forEach((item, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.vehicle}</td>
+        <td>${item.type}</td>
+        <td>${item.datetime}</td>
+        <td>
+          <button class='action-btn' onclick='editData(${index})'>Edit</button>
+          <button class='action-btn delete-btn' onclick='deleteData(${index})'>Delete</button>
+        </td>`;
+      tableBody.appendChild(row);
+    });
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const newBooking = {
+      name: form.name.value,
+      vehicle: form.vehicle.value,
+      type: form.type.value,
+      datetime: form.datetime.value
+    };
+    bookings.push(newBooking);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    form.reset();
+    displayData(bookings);
+  });
+
+  function deleteData(index) {
+    bookings.splice(index, 1);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    displayData(bookings);
+  }
+
+  function editData(index) {
+    const item = bookings[index];
+    form.name.value = item.name;
+    form.vehicle.value = item.vehicle;
+    form.type.value = item.type;
+    form.datetime.value = item.datetime;
+    deleteData(index);
+  }
+
+  search.addEventListener('input', () => {
+    const filtered = bookings.filter(b =>
+      b.name.toLowerCase().includes(search.value.toLowerCase()) ||
+      b.vehicle.toLowerCase().includes(search.value.toLowerCase())
+    );
+    displayData(filtered);
+  });
+
+  clearAll.addEventListener('click', () => {
+    if (confirm('Are you sure you want to remove all bookings?')) {
+      bookings = [];
+      localStorage.removeItem('bookings');
+      displayData(bookings);
+    }
+  });
+
+  displayData(bookings);
+</script>
+
+</body>
+</html>
